@@ -14,6 +14,7 @@ module.exports = env => {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
+    devServer: { hot: true },
     module: {
       rules: [
         {
@@ -68,7 +69,7 @@ module.exports = env => {
         template: "./src/index.html",
         filename: "./index.html"
       }),
-      new CleanWebpackPlugin(),
+      new CleanWebpackPlugin()
     ],
     performance: {
       hints: false
