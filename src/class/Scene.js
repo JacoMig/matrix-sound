@@ -20,6 +20,12 @@ SceneManager.prototype.render = function(HTML_EL){
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.render( this.scene, this.camera );
     HTML_EL.appendChild( this.renderer.domElement );
+    
+    const animate = (time) => {
+        requestAnimationFrame( animate );
+        this.renderer.render( this.scene, this.camera );
+    };
+    animate()
 }
 
 SceneManager.prototype.add = function(obj){

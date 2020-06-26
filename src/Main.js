@@ -56,16 +56,10 @@ const Main = () => {
                         g: new_color.g,
                         b: new_color.b,
                     }) 
-                    defaultHex = pickedObject.material.emissive.getHex();
-                    // pickedObject.material.emissive.setHex(0xFFFFFF);
                     pickedObject.position.z = -0.03
                     console.log(pickedObject)
                 }    
-                /* light.position.x = mouse.x
-                light.position.y = mouse.y */
             }
-            
-           
         }
 
         const onMouseDown = (e) => {
