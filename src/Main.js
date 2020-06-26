@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import {TweenLite} from "gsap";
-var OrbitControls = require('three-orbit-controls')(THREE)
+import SceneManager from './class/Scene'
 
 // https://threejsfundamentals.org/threejs/lessons/threejs-picking.html
 // https://github.com/lachlantweedie/react-threejs-es6-boilerplate
@@ -10,15 +10,18 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 const Main = () => {
    // const [mouse, setMouse] = useState({x:0, y:0})
     const planeREF = useRef(<HTMLElement></HTMLElement>)
-    
+   // const [scene, useScene] = useState()
    
     
     useEffect(() => {
-        var cameraMoves = {x:0,y:0,z:-0.1,move:false,speed:0.2};
-        // let move = false
-        let incr = 0.01
-
+        const Scene = new SceneManager()
+        const camera = Scene.camera
+       
+        // console.log(Scene.camera)
+        
         let isDown = false;
+        let pickedObject = null;
+        
         const onMouseMove = (e) => {
             if(isDown){
                 mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
@@ -75,34 +78,16 @@ const Main = () => {
                 pickedObject.position.z = 0
                 pickedObject = null
             }
-            
-
-        }
+         }
 
         var config = {
-            height: window.innerHeight,
-            /* width: 4000,
-            rowsCount: 10,
-            linesHeight: 20,
-            linesWidth: 20, */
             bricksCount: 100,
             color: 0xDD006C
         };
-        var camera, scene, renderer;
+       
         var raycaster;
         let mouse = new THREE.Vector2(-100,-100);
        
-        const fov = 45;
-        const aspect = window.innerWidth / window.innerHeight;  // the canvas default
-        const near = 1;
-        const far = 10000;
-        // var geometry, mesh;
-        camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
-        camera.position.z = 2.5;
-        camera.position.x = 0;
-        camera.position.y = 0;
-        
-        scene = new THREE.Scene();
 
 
         var gridObject = new THREE.Object3D();
@@ -115,21 +100,7 @@ const Main = () => {
         const light = new THREE.DirectionalLight(color, intensity);
         light.position.set(-3, 0, 7);
         light.target = gridObject
-        // light.target.position.set(1, 0, -2);
-        
-
-        /*  let rows = 0
-        let widthCell
-        function getCellWidth(){
-            for(i = 0; i <= window.innerWidth; i++){
-                if(i % config.rowsCount == 0){
-                    rows++
-                }
-            } 
-          //  console.log(config.linesWidth  /100)
-           // console.log(rows)
-        }
-        getCellWidth()    */
+      
         const visibleHeightAtZDepth = ( depth, camera ) => {
             // compensate for cameras not positioned at z=0
             const cameraOffset = camera.position.z;
@@ -147,18 +118,11 @@ const Main = () => {
             return height * camera.aspect;
           };
         
-       // let  cellWidth = 2 * (window.innerWidth/10) / window.innerWidth
-       // let  cellWidth = (window.innerWidth/8)/(window.innerWidth-200)
+       
         let  cellWidth = visibleWidthAtZDepth(0.5, camera) / 10
         let cellHeight = visibleHeightAtZDepth(0.5, camera) / 10
-      //  const stepw = config.width / config.linesWidth;
+      
 
-
-        // console.log(stepw)
-        console.log(window.innerWidth)
-        // console.log(window.innerWidth / (window.innerWidth/10))
-        
-        
 
         let y = 0;
         let x = 0;
@@ -174,16 +138,16 @@ const Main = () => {
                 x = 0
                 y--
             }
-           
-            // plane.position.y = 0
             gridObject.add(plane);
         }
         var bb = new THREE.Box3()
         bb.setFromObject(gridObject);
         camera.position.x = ((bb.max.x - bb.min.x) / 2) - cellWidth/2;
-        camera.position.y = (((bb.max.y - bb.min.y) / 2) - (cellHeight/2))  * -1;  
+        camera.position.y = (((bb.max.y - bb.min.y) / 2) - (cellHeight/2))  * -1;   
         
-
+        Scene.add( gridObject );
+        Scene.add( light );
+        Scene.render(planeREF.current)
         
         /* const gui = new dat.GUI();
         gui.add(light, 'intensity', 0, 2, 0.01);
@@ -198,36 +162,21 @@ const Main = () => {
 
         
  */
-        const cameraGUI = new dat.GUI();
+        /* const cameraGUI = new dat.GUI();
         cameraGUI.add(camera.position, 'x', -1, 1);
         cameraGUI.add(camera.position, 'z', -10, 10);
-        cameraGUI.add(camera.position, 'y', -1, 1);
-        scene.add( gridObject );
+        cameraGUI.add(camera.position, 'y', -1, 1); */
+
+        /* scene.add( gridObject );
         
         scene.add( light );
-        // scene.add( light.target );
-        
-        
-        //scene.add( light.target );
-        // console.log(gridObject)
+       
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.setPixelRatio(window.devicePixelRatio);
-       // renderer.render( scene, camera );
-        
-       /*  var controls = new OrbitControls( camera);
-        controls.enabled = false
+        renderer.setPixelRatio(window.devicePixelRatio); */
       
-        var bb = new THREE.Box3()
-        bb.setFromObject(gridObject);
        
-        bb.getCenter(controls.target);
-       
-        controls.update()
-        console.log(controls)
-        console.log(window.innerWidth)  */
-       
-        planeREF.current.appendChild( renderer.domElement );
+        //planeREF.current.appendChild( renderer.domElement );
 
         
         raycaster = new THREE.Raycaster();
@@ -238,22 +187,13 @@ const Main = () => {
         window.addEventListener( 'mousedown', onMouseDown, false );
         window.addEventListener( 'mouseup', onMouseUp, false );
 
-       let pickedObject = null
-
-      
-         
        
-       // console.log(mouse)
 
-        let defaultHex;
-        let tween;
-        var animate = function (time) {
+        /* var animate = function (time) {
             requestAnimationFrame( animate );
-            
-            //camera.position.z =  mouseZ;
             renderer.render( scene, camera );
         };
-        animate()
+        animate() */
         
     }, [])
 
