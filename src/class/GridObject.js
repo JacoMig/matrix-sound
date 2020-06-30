@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {visibleHeightAtZDepth, visibleWidthAtZDepth} from '../utils/visibleSize'
-import {config} from '../config'
+import {config, cells} from '../config'
+
 
 export default function GridObject(camera){
     if(!camera){
@@ -11,20 +12,22 @@ export default function GridObject(camera){
    
     this.gridObject = new THREE.Object3D();
     this.gridObject.name = "Grid"
-    let cellWidth = visibleWidthAtZDepth(0.5, camera) / 10;
-    let cellHeight = visibleHeightAtZDepth(0.5, camera) / 10;
+    let cellWidth = visibleWidthAtZDepth(0.8, camera) / 10;
+    let cellHeight = visibleHeightAtZDepth(0.8, camera) / 10;
 
     let y = 0;
     let x = 0;
+    
     for(var i = 1; i <= config.bricksCount; i++){
         const geometry = new THREE.BoxGeometry( cellWidth, cellHeight, 0.4);
         const material = new THREE.MeshPhongMaterial( {color: config.color,   flatShading: true,} );
         const  plane = new THREE.Mesh( geometry, material )
         plane.position.x = (cellWidth + 0.01).toFixed(2) * x
         plane.position.y = (cellHeight + 0.01).toFixed(2) * y 
-        plane.name = "plane-"+i
+        plane.name = "plane-"+x
+        plane.sound = {note: cells-(cells-x), key: Math.floor((config.bricksCount/cells)+y)}
         x++
-        if(i % 10 === 0){
+        if(i % cells === 0){
             x = 0
             y--
         }
