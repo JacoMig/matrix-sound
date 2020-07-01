@@ -1,18 +1,30 @@
 import React, {useState, useEffect} from 'react';
 import * as THREE from 'three';
-import {onMouseDown} from '../utils/handleEvents';
+import styled from 'styled-components'
 
-const Fader = ({envelopeRack}) => {
+const FaderDIV = styled.div`
+
+`
+
+const FaderINPUT = styled.input`
+    -webkit-appearance: slider-vertical;
+    background: white;
+`
+
+const Fader = () => {
     
+    const handleChange = (e) => {
+        
+    }
+
     useEffect(() => {
-        const faderGeo = new THREE.BoxGeometry( 0.05, 0.1, 0.3);
-        const faderMaterial = new THREE.MeshPhongMaterial( {color: 0X999999,   flatShading: true,} );
-        const faderObj = new THREE.Mesh( faderGeo, faderMaterial )
-        faderObj.name = "fader"
-        envelopeRack.add(faderObj)
+        
     }, [])
     
-    return null
+    return  <FaderDIV>
+                <FaderINPUT onChange={handleChange} name="attack" type='range' min={0} max={10}/>
+                <FaderINPUT onChange={handleChange} name="release" type='range' min={0} max={10}/>
+            </FaderDIV>
 }
 
 export default Fader

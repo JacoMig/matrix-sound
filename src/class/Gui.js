@@ -1,3 +1,23 @@
+import * as dat from 'dat.gui';
+
+
+
+// import Light from './Light';
+
+
+export default function Gui() {
+       /*  this.gui = new dat.GUI();
+        const light = new Light().light
+        this.gui.add(light, 'intensity', 0, 2, 0.01);
+        this.gui.add(light.position, 'x', -10, 10);
+        this.gui.add(light.position, 'z', -10, 10);
+        this.gui.add(light.position, 'y', -10, 10);  
+         */
+}
+
+
+
+
 
 /* 
 import * as dat from 'dat.gui';

@@ -14,12 +14,12 @@ export default function SceneManager(){
     return null
 }
 
-SceneManager.prototype.render = function(HTML_EL){
-    this.renderer = new THREE.WebGLRenderer({ antialias: window.devicePixelRatio });
+SceneManager.prototype.render = function(CANVAS_EL){
+    this.renderer = new THREE.WebGLRenderer({ antialias: window.devicePixelRatio, canvas: CANVAS_EL });
     this.renderer.setSize( window.innerWidth, window.innerHeight );
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.render( this.scene, this.camera );
-    HTML_EL.appendChild( this.renderer.domElement );
+    // HTML_EL.appendChild( this.renderer.domElement );
     
     const animate = (time) => {
         requestAnimationFrame( animate );

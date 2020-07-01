@@ -17,11 +17,16 @@ const notes = {
     11: "B",
 }
 
-const Synth = ({pickedObject, Scene}) => {
+const Synth = ({pickedObject, canvas}) => {
+    
     const [fmSynth, setFmSynth] = useState(new Tone.FMSynth())
+    const [envelope, setEnvelope] = useState({attack: 0.01, decay: 0.01, sustain: 1, release: 0.01})
+    const [isWindowLoaded, setIsWindowLoaded] = useState(false);
+
     useEffect(() => {
         fmSynth.toMaster();
-        console.log(Scene)
+       // fmSynth.harmonicity.value = 10;
+       window.addEventListener('load', ()=> setIsWindowLoaded(true))
     } ,[])    
 
     useEffect(() => {
@@ -30,15 +35,23 @@ const Synth = ({pickedObject, Scene}) => {
             let currNote = pickedObject.object.sound.note
             let currKey = pickedObject.object.sound.key
             fmSynth.triggerAttack(`${notes[currNote]}${currKey}`)
-           
+           console.log(fmSynth)
         }else {
             fmSynth.triggerRelease()
         }
+        
     } ,[pickedObject])
+
+    useEffect(() => {
+        /* Object.keys(env => {
+            fmSynth.envelope.attack.value = envelope.attack   
+        }) */
+        fmSynth.envelope.set(envelope)
+    },[envelope])
     
     return (
         <>
-            <Envelope Scene={Scene} pickedObject={pickedObject}/>
+          {isWindowLoaded && <Envelope canvas={canvas} envelope={envelope} setEnvelope={setEnvelope} />  }
         </>
     )
 }

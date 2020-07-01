@@ -32,20 +32,22 @@ const animateFrom = (pickedObject) => {
     }) 
    
     pickedObject.position.z = 0
-  //  pickedObject = null
+   pickedObject = null
 }
 
+let currMouseY = mouse.y
+let movingMouse = ''
 const intersectObject = (camera, objects, setPicked) => {
     raycaster.setFromCamera( mouse, camera );
     var intersects = raycaster.intersectObjects( objects, true ); 
-    
+   // currMouseY = mouse.y
     if (pickedObject ) {
         if(pickedObject.name.includes("plane")){
-            console.log('call animateFrom')
+            
             animateFrom(pickedObject)
         }
         
-        pickedObject = null
+       // pickedObject = null
        // setPicked(null)
     } 
     
@@ -59,12 +61,10 @@ const intersectObject = (camera, objects, setPicked) => {
             setPicked({object: pickedObject})
             console.log(pickedObject.name)
         }
-        
-        if(pickedObject.name.includes("fader")){
-            setPicked({object: pickedObject, mouse})
-        }
     }    
 }
+
+
 
 export const onMouseMove = (e, object, camera, setPicked) => {
     if(isDown){
@@ -85,7 +85,7 @@ export const onMouseUp = (setPicked) => {
         if(pickedObject.name.includes("plane")){
             animateFrom(pickedObject)
         }
-        
+       // currMouseY = -100
         setPicked(null)
     }
  }

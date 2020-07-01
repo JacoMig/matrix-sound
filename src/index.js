@@ -6,9 +6,7 @@ import './global.scss'
 class App extends React.Component {
     render(){
         return (
-            <div>
-               <Main />
-            </div>
+            <Main />
         )
     }
 }
