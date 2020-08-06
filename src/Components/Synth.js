@@ -19,39 +19,41 @@ const notes = {
 
 const Synth = ({pickedObject, canvas}) => {
     
-    const [fmSynth, setFmSynth] = useState(new Tone.FMSynth())
+    const [fmSynth, setFmSynth] = useState()
     const [envelope, setEnvelope] = useState({attack: 0.01, decay: 0.01, sustain: 1, release: 0.01})
     const [isWindowLoaded, setIsWindowLoaded] = useState(false);
-
+    
     useEffect(() => {
-        fmSynth.toMaster();
+        setFmSynth(new Tone.FMSynth().toMaster()) 
+        // fmSynth.toMaster();
        // fmSynth.harmonicity.value = 10;
        window.addEventListener('load', ()=> setIsWindowLoaded(true))
     } ,[])    
 
     useEffect(() => {
-        console.log(pickedObject)
-        if(pickedObject && pickedObject.object.name.includes('plane')){
-            let currNote = pickedObject.object.sound.note
-            let currKey = pickedObject.object.sound.key
-            fmSynth.triggerAttack(`${notes[currNote]}${currKey}`)
-           console.log(fmSynth)
-        }else {
-            fmSynth.triggerRelease()
+        // console.log(pickedObject)
+        if(fmSynth){
+            if(pickedObject && pickedObject.object.name.includes('plane')){
+                let currNote = pickedObject.object.sound.note
+                let currKey = pickedObject.object.sound.key
+                fmSynth.triggerAttack(`${notes[currNote]}${currKey}`)
+               
+            }else {
+                fmSynth.triggerRelease()
+            }
         }
+        
         
     } ,[pickedObject])
 
     useEffect(() => {
-        /* Object.keys(env => {
-            fmSynth.envelope.attack.value = envelope.attack   
-        }) */
-        fmSynth.envelope.set(envelope)
+        fmSynth && fmSynth.envelope.set(envelope)
+        console.log(envelope)
     },[envelope])
     
     return (
         <>
-          {isWindowLoaded && <Envelope canvas={canvas} envelope={envelope} setEnvelope={setEnvelope} />  }
+          {isWindowLoaded && <Envelope canvas={canvas} envelope={envelope} setEnvelope={setEnvelope} />   }
         </>
     )
 }

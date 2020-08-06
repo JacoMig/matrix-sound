@@ -1,0 +1,58 @@
+.knob {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  margin: 0 auto;
+}
+
+.knob .ticks {
+  position: absolute;
+}
+
+.knob .ticks .tick {
+  position: absolute;
+  background: black;
+  -webkit-box-shadow: inset 0 0 0 0 black;
+          box-shadow: inset 0 0 0 0 black;
+  width: 3px;
+  height: 20px !important;
+  -webkit-transition: -webkit-box-shadow 0.5s;
+  transition: -webkit-box-shadow 0.5s;
+  transition: box-shadow 0.5s;
+  transition: box-shadow 0.5s, -webkit-box-shadow 0.5s;
+}
+
+.knob .ticks .tick.active {
+  -webkit-box-shadow: inset 0 0 5px 2px darkcyan, 0 0 0 1px #369;
+          box-shadow: inset 0 0 5px 2px darkcyan, 0 0 0 1px #369;
+}
+
+.knob.outer {
+ border-radius: 50%; 
+ background-color: darkcyan;
+  /* border: 1px solid #222;
+  border-bottom: 5px solid #222; */
+ /*  background-image: radial-gradient(100% 70%, #666 6%, #333 90%); */
+ /*  -webkit-box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 12px #444;
+          box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 12px #444; */
+}
+
+.knob.inner {
+  border-radius: 50%;
+}
+
+.knob.inner .grip {
+  position: absolute;
+  width: 8%;
+  height: 43%;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  border-radius: 0;
+  background: white;
+ 
+}
+/*# sourceMappingURL=knob.css.map */
