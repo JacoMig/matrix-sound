@@ -1,7 +1,7 @@
 import {TweenLite} from "gsap";
 import * as THREE from 'three';
 import {config} from '../config';
-import {isTouchDevice} from './utils/isTouchDevice';
+import {isTouchDevice} from './isTouchDevice';
 let isDown = false;
 export let pickedObject = null;
 const raycaster = new THREE.Raycaster();
