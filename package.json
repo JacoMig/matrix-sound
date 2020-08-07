@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://jacomig.github.io/matrix-sound/",
   "scripts": {
     "start": "webpack-dev-server --open --hot --mode development",
-    "build": "webpack --env.NODE_ENV=production --mode production"
+    "build": "webpack --env.NODE_ENV=production --mode production",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
