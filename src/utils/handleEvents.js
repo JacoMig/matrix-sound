@@ -1,14 +1,23 @@
 import {TweenLite} from "gsap";
 import * as THREE from 'three';
-import {config} from '../config'
+import {config} from '../config';
+import {isTouchDevice} from './utils/isTouchDevice';
 let isDown = false;
 export let pickedObject = null;
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2(-100,-100);
 
+
 const getMouse = (e) => {
-    mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+    console.log(e)
+    if(isTouchDevice()){
+        mouse.x = ( e.touches[0].clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( e.touches[0].clientY / window.innerHeight ) * 2 + 1;
+    }else {
+        mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+    }
+    
 }
 
 const animateTo = (pickedObject) => {
@@ -75,6 +84,7 @@ export const onMouseMove = (e, object, camera, setPicked) => {
 
 export const onMouseDown = (e, object, camera, setPicked) => {
     isDown = true;
+    console.log(e)
     getMouse(e)
     intersectObject(camera, object.children,setPicked)
 }

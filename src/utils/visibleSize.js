@@ -9,7 +9,7 @@ export const visibleHeightAtZDepth = ( depth, camera ) => {
     const vFOV = camera.fov * Math.PI / 180; 
   
     // Math.abs to ensure the result is always positive
-    return 2 * Math.tan( vFOV / 2 ) * Math.abs( depth );
+    return 4 * Math.tan( vFOV / 2 ) * Math.abs( depth );
   };
 export  const visibleWidthAtZDepth = ( depth, camera ) => {
     const height = visibleHeightAtZDepth( depth, camera );

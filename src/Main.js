@@ -6,12 +6,14 @@ import Light from './class/Light'
 // import Gui from './class/Gui'
 import {onMouseMove, onMouseDown, onMouseUp} from './utils/handleEvents'
 import Synth from './Components/Synth'
-
+import {isTouchDevice} from './utils/isTouchDevice';
 
 // https://threejsfundamentals.org/threejs/lessons/threejs-picking.html
 // https://github.com/lachlantweedie/react-threejs-es6-boilerplate
 
 // const ObjectContext = React.createContext({position: {x:0, y: 0}});
+
+
 
 const Main = () => {
     const canvasREF = useRef(<HTMLElement></HTMLElement>)
@@ -24,22 +26,34 @@ const Main = () => {
         const light = new Light(gridObject).light
       //  const GUI = new Gui()
         
-     
+        
         Scene.add( gridObject );
         Scene.add( light );
         Scene.render(canvasREF.current)
         
        
-       console.log(Scene)
-       
-        window.addEventListener( 'mousemove', (e) => onMouseMove(e, Scene.scene, camera, setPicked), false );
-        window.addEventListener( 'mousedown', (e) => onMouseDown(e, Scene.scene, camera, setPicked), false );
-        window.addEventListener( 'mouseup', () => onMouseUp(setPicked), false );
-
+        if(isTouchDevice()){
+            window.addEventListener( 'touchmove', (e) => onMouseMove(e, Scene.scene, camera, setPicked), false );
+            window.addEventListener( 'touchstart', (e) => onMouseDown(e, Scene.scene, camera, setPicked), false );
+            window.addEventListener( 'touchend', () => onMouseUp(setPicked), false );    
+        }else {
+            window.addEventListener( 'mousemove', (e) => onMouseMove(e, Scene.scene, camera, setPicked), false );
+            window.addEventListener( 'mousedown', (e) => onMouseDown(e, Scene.scene, camera, setPicked), false );
+            window.addEventListener( 'mouseup', () => onMouseUp(setPicked), false );
+        }
+        
+        
        return (() => {
-            window.removeEventListener( 'mousemove', (e) => onMouseMove(e, Scene.scene, camera), false );
+        if(isTouchDevice()){
+            window.removeEventListener( 'touchmove', (e) => onMouseMove(e, Scene.scene, camera, setPicked), false );
+            window.removeEventListener( 'touchstart', (e) => onMouseDown(e, Scene.scene, camera, setPicked), false );
+            window.removeEventListener( 'touchend', () => onMouseUp(setPicked), false );    
+        }else {
+            window.addEventListener( 'mousemove', (e) => onMouseMove(e, Scene.scene, camera, setPicked), false );
             window.removeEventListener( 'mousedown', (e) => onMouseDown(e, Scene.scene, camera, setPicked), false );
             window.removeEventListener( 'mouseup', () => onMouseUp(setPicked), false );
+        }
+         
        })
         
     }, [])
