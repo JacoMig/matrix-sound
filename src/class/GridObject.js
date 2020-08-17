@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {visibleHeightAtZDepth, visibleWidthAtZDepth} from '../utils/visibleSize'
 import {config, cells} from '../config'
-import * as dat from 'dat.gui';
-import {isTouchDevice} from '../utils/isTouchDevice';
+/* import * as dat from 'dat.gui';
+import {isTouchDevice} from '../utils/isTouchDevice'; */
 export default function GridObject(camera){
     if(!camera){
         throw new Error("Please provide a camera")

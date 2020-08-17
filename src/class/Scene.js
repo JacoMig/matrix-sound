@@ -31,3 +31,7 @@ SceneManager.prototype.render = function(CANVAS_EL){
 SceneManager.prototype.add = function(obj){
     this.scene.add(obj)
 } 
+
+SceneManager.prototype.remove = function(obj){
+    this.scene.remove(obj)
+} 

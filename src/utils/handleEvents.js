@@ -44,8 +44,8 @@ const animateFrom = (pickedObject) => {
    pickedObject = null
 }
 
-let currMouseY = mouse.y
-let movingMouse = ''
+/* let currMouseY = mouse.y
+let movingMouse = '' */
 const intersectObject = (camera, objects, setPicked) => {
     raycaster.setFromCamera( mouse, camera );
     var intersects = raycaster.intersectObjects( objects, true ); 
