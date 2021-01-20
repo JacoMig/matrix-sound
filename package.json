@@ -33,7 +33,7 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "file-loader": "^6.0.0",
-    "gsap": "^3.3.4",
+    "gsap": "^3.6.0",
     "node-sass": "^4.13.1",
     "react-rangeslider": "^2.2.0",
     "sass-loader": "^8.0.2",
