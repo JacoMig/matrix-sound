@@ -34,7 +34,7 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "file-loader": "^6.0.0",
     "gsap": "^3.3.4",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react-rangeslider": "^2.2.0",
     "sass-loader": "^8.0.2",
     "styled-components": "^5.1.1",
